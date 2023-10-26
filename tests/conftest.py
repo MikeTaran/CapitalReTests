@@ -1,10 +1,7 @@
 import os.path
 import shutil
-import time
 from datetime import datetime
-
 import allure
-from selenium import webdriver
 import pytest
 from selenium.webdriver.chrome.options import Options as OptionsChrome
 from selenium.webdriver.firefox.options import Options as OptionsFirefox
@@ -17,10 +14,6 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
-
-
-# для корректного отображения кириллицы в параметризаторах
-def pytest_make_parametrize_id(config, val): return repr(val)
 
 
 def pytest_addoption(parser):
@@ -52,7 +45,6 @@ def driver(request):
     headless = request.config.getoption("--headless")
     # headless = True  # режим браузера без отображения (безголовый)
     # headless = False  # режим с отображением браузера
-    driver = None
 
     if browser_name == "chrome":
         chrome_options = OptionsChrome()
@@ -64,11 +56,19 @@ def driver(request):
 
     elif browser_name == "firefox":
         options_firefox = OptionsFirefox()
+        options_firefox.page_load_strategy = "eager"  # 'normal'
+        options_firefox.add_argument('--language')
+        # !!!
+        # безголовый режим браузера задается переменной headless
         if headless:
-            options_firefox.add_argument('--headless')  # Включение режима headless
-        options_firefox.set_preference("intl.accept_languages", user_language)
-        driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=options_firefox)
-        # driver = webdriver.Firefox()
+            options_firefox.add_argument("--headless")  # ?похоже, не работает на MacOS
+        driver = webdriver.Firefox(
+            service=webdriver.firefox.service.Service(
+                executable_path=GeckoDriverManager().install(),
+                log_output="geckodriver.log"  # Specify the desired log output file
+            ),
+            options=options_firefox
+        )
 
     elif browser_name == "edge":
         options_edge = OptionsEdge()

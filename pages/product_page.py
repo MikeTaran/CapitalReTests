@@ -1,5 +1,3 @@
-import time
-
 from locators.main_page_locators import MainPageLocators
 from locators.product_page_locators import ProductPageLocators
 from pages.base_page import BasePage
@@ -12,7 +10,7 @@ class ProductPage(BasePage):
     def check_block_award(self):
         menu_product = self.element_is_visible(self.locators_main.MENU_PRODUCT)
         self.action_move_to_element(menu_product)
-        self.element_is_visible(self.locators_main.MENU_PRODUCT_DESKTOP).click()
+        self.element_is_visible(self.locators_main.MENU_PRODUCT_DESKTOP_TRADING).click()
         award_winning = self.element_is_visible(self.locators_product.AWARD_WINNING_PLATFORM)
         award_winning_text = award_winning.text
         return award_winning_text

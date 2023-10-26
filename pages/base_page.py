@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 import allure
@@ -141,3 +142,9 @@ class BasePage:
         attach = self.driver.get_screenshot_as_png()
         allure.attach(attach, name=f"Screenshot_{datetime.today()}", attachment_type=allure.attachment_type.PNG)
 
+    def main_menu_navigation(self, main_menu, sub_menu):
+        main_menu = self.element_is_visible(main_menu)
+        self.action_move_to_element(main_menu)
+        time.sleep(5)
+        self.element_is_visible(sub_menu).click()
+        time.sleep(5)

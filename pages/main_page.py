@@ -46,3 +46,7 @@ class MainPage(BasePage):
     def check_explore_platform_text(self):
         explore_text = self.element_is_visible(self.locators.EXPLORE_PLATFORM_TEXT).text
         return explore_text
+
+    def check_main_menu(self):
+        self.main_menu_navigation(self.locators.MENU_EDUCATION, self.locators.MENU_EDUCATION_CFD_TRADING_GUIDE)
+

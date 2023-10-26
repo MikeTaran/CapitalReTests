@@ -45,6 +45,9 @@ class TestLocalBugs:
                 with allure.step(f'\nNo localization for next lang:  {data_lang}'):
                     print(f'\nNo localization for next lang:  {data_lang}')
             assert placeholder != 'Search', f'{lang}: {placeholder}'
+        else:
+            assert placeholder == 'Search', f'{lang}: {placeholder}'
+
 
     @allure.feature('220_loc: Phrase "Trade on market swings with CFDs and Spread Betting" '
                     'is displayed English on main page in the block "Explore our platform"')

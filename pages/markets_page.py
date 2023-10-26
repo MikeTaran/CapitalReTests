@@ -1,8 +1,5 @@
-import time
-
 from locators.main_page_locators import MainPageLocators
 from locators.markets_page_locators import MarketsPageLocators
-from locators.product_page_locators import ProductPageLocators
 from pages.base_page import BasePage
 
 

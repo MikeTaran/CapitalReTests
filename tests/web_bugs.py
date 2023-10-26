@@ -36,3 +36,12 @@ class TestWebBugs:
         page = MarketsPage(driver, base_url)
         pointer = page.check_trading_calculator_input()
         assert pointer != 'pointer', 'Cursor is as a pointer'
+
+    @allure.feature('232_web:')
+    @pytest.mark.parametrize('lang', ['en'])
+    @pytest.mark.parametrize('lic', ['local'])
+    @pytest.mark.xfail
+    def test_web(self, driver, lang, lic):
+        page = MainPage(driver, base_url)
+        page.open_site_lang_lic(lang, lic)
+        page.check_main_menu()
